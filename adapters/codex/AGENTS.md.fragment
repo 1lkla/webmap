@@ -1,0 +1,15 @@
+<!-- webmap · 合入项目根 AGENTS.md。让 Codex 在本仓库内常驻知道 webmap 流程。 -->
+
+## webmap(架构分析技能)
+
+当用户要求"分析/摸清某个已登录 Web 系统的架构、枚举全部路由/API/功能"时,执行 webmap:
+
+1. `Read` `skills/webmap/core/webmap_playbook.md` 并**逐字遵循**。
+2. 原语绑定:`run`/`browser`=`shell`(browser-harness heredoc,**整段单次跑完**),`write`=`apply_patch`,
+   `read`=文件读,`ask`=对话发问。
+3. **沙箱前置(必看)**:webmap 要连用户已运行的 Chrome + 拉外网 chunk + 起 daemon。Codex 默认沙箱断网+隔离
+   会全挡 → **必须以放行网络+主机的审批档运行**(`--full-auto` 等)。连接失败即告知用户改档重跑并停,
+   不静默降级、不绕沙箱。
+4. 触发细节与完整绑定见 `skills/webmap/adapters/codex/prompts/webmap.md`。
+5. 只读纪律:登录墙→停、不输凭据、改写类控件检测后跳过、只写 `--out` 目录、不做扫描/DoS
+   (`skills/webmap/core/webmap_playbook.md` §6)。
